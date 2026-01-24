@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - Yann's NOTE{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <button class="nav-btn active">📊 Dashboard</button>
+            <button class="nav-btn">🗄️ Documents</button>
+            <button class="nav-btn">⚙️ Configuration</button>
+        </aside>
+
+        <!-- Content -->
+        <div class="admin-content">
+            <div class="admin-header glass">
+                <div>
+                    <h1>Bienvenue, Admin</h1>
+                    <p>🕐 {{ current_time }}</p>
+                </div>
+                <div class="activity-badge">
+                    <span class="label">Activité Aujourd'hui</span>
+                    <span class="count">{{ items_today }} item{{ 's' if items_today != 1 else '' }}</span>
+                </div>
+            </div>
+
+            <div class="content-management">
+                <div class="section-header">
+                    <h2>Gestion du Contenu</h2>
+                    <button class="btn btn-primary" onclick="showAddForm()">
+                        ➕ Ajouter
+                    </button>
+                </div>
+
+                <div id="addForm" class="add-form glass" style="display:none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Titre</label>
+                            <input type="text" id="title" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Catégorie</label>
+                            <select id="category" class="form-input">
+                                <option>🎙️ Audio Overviews</option>
+                                <option>🎬 Video Overviews</option>
+                                <option>📊 Slide Decks</option>
+                                <option>🎨 Infographies</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>URL du fichier</label>
+                            <input type="text" id="url" class="form-input" placeholder="https://...">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Description</label>
+                            <textarea id="description" class="form-input" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button onclick="hideAddForm()" class="btn btn-outline">Annuler</button>
+                        <button onclick="saveContent()" class="btn btn-primary">💾 Enregistrer</button>
+                    </div>
+                </div>
+
+                <div class="content-table glass">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Catégorie</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentList">
+                            {% if items|length == 0 %}
+                            <tr>
+                                <td colspan="4" class="empty">Aucun contenu pour le moment.</td>
+                            </tr>
+                            {% else %}
+                            {% for item in items %}
+                            <tr data-id="{{ item.id }}">
+                                <td><strong>{{ item.title }}</strong></td>
+                                <td>{{ item.category }}</td>
+                                <td>
+                                    {% if item.is_zero_data %}
+                                    <span class="badge-zero">ZERO DATA</span>
+                                    {% endif %}
+                                </td>
+                                <td class="actions">
+                                    <button onclick="editItem({{ item.id }})" class="btn-icon">✏️</button>
+                                    <button onclick="deleteItem({{ item.id }})" class="btn-icon delete">🗑️</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showAddForm() {
+    document.getElementById('addForm').style.display = 'block';
+}
+
+function hideAddForm() {
+    document.getElementById('addForm').style.display = 'none';
+    clearForm();
+}
+
+function clearForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('url').value = '';
+}
+
+async function saveContent() {
+    const data = {
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        category: document.getElementById('category').value,
+        url: document.getElementById('url').value,
+        isZeroData: true
+    };
+    
+    const response = await fetch('/api/content', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    });
+    
+    if (response.ok) {
+        location.reload();
+    }
+}
+
+async function deleteItem(id) {
+    if (!confirm('Supprimer cet élément ?')) return;
+    
+    const response = await fetch('/api/content', {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+    });
+    
+    if (response.ok) {
+        location.reload();
+    }
+}
+</script>
+{% endblock %}

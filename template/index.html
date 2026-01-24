@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <h2 class="hero-title">Welcome to Yann's Note</h2>
+    <p class="hero-sub">A minimal site demo converted to Flask with camera, microphone, and geolocation hooks.</p>
+
+    <div class="hero-actions">
+      <button id="btn-mic" class="btn">Use Microphone</button>
+      <button id="btn-camera" class="btn">Use Camera</button>
+      <button id="btn-geo" class="btn">Get Geolocation</button>
+      <a class="btn" href="/admin">Go to Admin</a>
+    </div>
+
+    <div id="media-output" class="media-output" aria-live="polite"></div>
+  </div>
+</section>
+{% endblock %}

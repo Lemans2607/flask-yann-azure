@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Services Étudiants - Yann's NOTE{% endblock %}
+
+{% block content %}
+<div class="students-page">
+    <div class="page-header">
+        <h1>Réussite Académique</h1>
+        <p>Simplifiez vos révisions avec des fiches audio intelligentes et des guides d'étude.</p>
+    </div>
+
+    <section class="options-section glass">
+        <h2>Générer mon Guide d'Étude</h2>
+        
+        <div class="options-grid">
+            <div class="option-card" id="optionA">
+                <div class="option-header">
+                    <div class="option-icon">📄</div>
+                    <h3>Option A : Mes propres cours</h3>
+                </div>
+                <p>Uploadez vos PDF ou photos de cahiers. Notre IA les analyse pour créer un guide structuré.</p>
+                <div class="upload-zone" style="display:none;">
+                    <input type="file" id="fileUpload" accept=".pdf,.png,.jpg,.jpeg" multiple>
+                    <label for="fileUpload">
+                        <div class="upload-icon">📤</div>
+                        <p>PDF, PNG, JPG (Max 10MB)</p>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="option-card" id="optionB">
+                <div class="option-header">
+                    <div class="option-icon">💬</div>
+                    <h3>Option B : Autre besoin</h3>
+                </div>
+                <p>Besoin de cours en ligne, d'une explication spécifique ou d'un coaching ? Discutez avec Yann.</p>
+                <a href="https://wa.me/237676042996?text=Bonjour%20Yann,%20j'ai%20besoin%20d'aide%20pour%20mes%20révisions..." 
+                   target="_blank" 
+                   class="btn btn-whatsapp" 
+                   style="display:none;">
+                    💬 Discuter sur WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-services">
+        <div class="feature-card glass">
+            <span class="badge">Zéro Data</span>
+            <div class="feature-icon">🎵</div>
+            <h3>Audio Overviews</h3>
+            <p>Transformez vos pavés de texte en podcasts digestes de 10 minutes. 
+               Idéal pour réviser dans le taxi ou en marchant.</p>
+            <button class="btn-link">Écouter un aperçu (30s) →</button>
+        </div>
+        
+        <div class="feature-card glass">
+            <div class="feature-icon">🃏</div>
+            <h3>Flashcards IA</h3>
+            <p>Générez automatiquement des questions/réponses basées sur les points clés 
+               de votre cours pour tester votre mémoire.</p>
+            <button class="btn-link">Voir un exemple →</button>
+        </div>
+    </section>
+</div>
+
+<script>
+document.getElementById('optionA').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('optionB').classList.remove('active');
+    this.querySelector('.upload-zone').style.display = 'block';
+    document.querySelector('#optionB .btn-whatsapp').style.display = 'none';
+});
+
+document.getElementById('optionB').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('optionA').classList.remove('active');
+    this.querySelector('.btn-whatsapp').style.display = 'flex';
+    document.querySelector('#optionA .upload-zone').style.display = 'none';
+});
+</script>
+{% endblock %}

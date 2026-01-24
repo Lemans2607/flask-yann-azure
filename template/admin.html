@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="admin container">
+  <h2>Admin Dashboard</h2>
+  <p class="welcome">Welcome! Current date and time: <strong>{{ current_time }}</strong></p>
+
+  <div class="activity">
+    <p>Recent activity overview: <strong>{{ items_added_today }}</strong> items added today.</p>
+    <button id="btn-add-item" class="btn">Add demo item</button>
+    <div id="activity-result" class="activity-result" aria-live="polite"></div>
+  </div>
+</section>
+{% endblock %}

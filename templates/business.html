@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Services Entreprises - Yann's NOTE{% endblock %}
+
+{% block content %}
+<div class="business-page">
+    <div class="page-header">
+        <h1>Formalisation & Croissance</h1>
+        <p>Passez de l'informel au professionnel avec des documents de classe mondiale.</p>
+    </div>
+
+    <section class="business-services">
+        <div class="service-card glass">
+            <div class="service-icon-large">✅</div>
+            <h3>Dossiers d'Appel d'Offres (DAO)</h3>
+            <p>Rédaction stratégique et structuration de vos réponses aux appels d'offres publics et privés.</p>
+            <ul class="feature-list">
+                <li>🛡️ Analyse de conformité</li>
+                <li>🛡️ Optimisation technique</li>
+            </ul>
+        </div>
+
+        <div class="service-card glass">
+            <div class="service-icon-large">📊</div>
+            <h3>Pitch Decks & Business Plans</h3>
+            <p>Documents visuels et financiers pour convaincre banques et investisseurs.</p>
+            <div class="urgency-toggle">
+                <label>
+                    <input type="checkbox" id="urgentToggle">
+                    <span>⏱️ Urgence 24h</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="service-card glass">
+            <div class="service-icon-large">🚀</div>
+            <h3>Audit de Marque</h3>
+            <p>Analyse de votre visibilité actuelle et recommandations de positionnement IA.</p>
+            <button class="btn btn-primary">Lancer un audit</button>
+        </div>
+    </section>
+
+    <section class="accuracy-section glass">
+        <h2>La Preuve par la <span class="text-gold">Source</span></h2>
+        <div class="accuracy-grid">
+            <div class="accuracy-content">
+                <p>Dans nos rapports de formalisation, chaque recommandation stratégique est liée 
+                   à une citation directe des textes de loi camerounais ou de vos documents internes.</p>
+                
+                <div class="source-examples">
+                    <div class="source-example">
+                        <span class="source-tag">PDF</span>
+                        <p class="source-text">"Conformément à l'article 12 du code OHADA... 
+                           [Cliquer pour voir la source]"</p>
+                    </div>
+                    <div class="source-example">
+                        <span class="source-tag">DAO</span>
+                        <p class="source-text">"La capacité technique est justifiée par... 
+                           [Cliquer pour voir la source]"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-mockup">
+                <h4>Aperçu interactif</h4>
+                <div class="mockup-lines">
+                    <div class="line"></div>
+                    <div class="line short"></div>
+                    <div class="citation-block">[ BLOC DE CITATION SOURCE ]</div>
+                    <div class="line medium"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

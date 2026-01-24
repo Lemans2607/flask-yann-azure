@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Cerveau Numérique IA - Yann's NOTE{% endblock %}
+
+{% block content %}
+<div class="brain-page">
+    <div class="brain-layout">
+        <!-- Sidebar -->
+        <aside class="brain-sidebar glass">
+            <h3>🗄️ Coffre-Fort Numérique</h3>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="label">Documents Analysés</span>
+                    <span class="value">24</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Audio Overviews</span>
+                    <span class="value">8</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Status IA</span>
+                    <span class="value connected">Connecté</span>
+                </div>
+            </div>
+
+            <div class="storage-bar">
+                <div class="storage-label">
+                    <span>Stockage Data</span>
+                    <span>42 MB / 1 GB</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 4%"></div>
+                </div>
+            </div>
+
+            <button class="btn-upload">
+                📤 Ajouter au Cerveau
+            </button>
+
+            <div class="info-box">
+                <strong>Grounding :</strong> Les réponses sont ancrées sur le Web en temps réel 
+                via Google Search pour garantir l'actualité des lois et news au Cameroun.
+            </div>
+        </aside>
+
+        <!-- Chat Interface -->
+        <div class="brain-chat glass">
+            <div class="chat-header">
+                <div class="chat-header-content">
+                    <div class="brain-icon">🧠</div>
+                    <div>
+                        <h4>Yann's <span class="text-gold">Brain IA</span></h4>
+                        <p class="subtitle">Expert en Clarté Contextuelle</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                {% for msg in messages %}
+                <div class="message {{ msg.role }}">
+                    <div class="message-content">{{ msg.text }}</div>
+                    {% if msg.sources %}
+                    <div class="sources">
+                        <!-- Sources ici -->
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                {% if messages|length == 0 %}
+                <div class="message ai">
+                    <div class="message-content">
+                        Bienvenue dans ton Cerveau Numérique. Je suis connecté à Google Search 
+                        et à tes documents pour t'apporter une clarté totale sans hallucinations.
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="chat-input">
+                <input type="text" 
+                       id="messageInput" 
+                       placeholder="Poser une question stratégique..."
+                       onkeypress="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()" class="btn-send">📤</button>
+            </div>
+            
+            <p class="disclaimer">
+                Yann's NOTE IA peut faire des erreurs. Vérifiez toujours les sources citées.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+async function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+    if (!message) return;
+    
+    const messagesDiv = document.getElementById('chatMessages');
+    
+    // Add user message
+    messagesDiv.innerHTML += `
+        <div class="message user">
+            <div class="message-content">${message}</div>
+        </div>
+    `;
+    input.value = '';
+    
+    // Show typing indicator
+    messagesDiv.innerHTML += `
+        <div class="message ai typing">
+            <div class="typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    
+    // Send to API
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({message})
+        });
+        const data = await response.json();
+        
+        // Remove typing indicator
+        document.querySelector('.typing')?.remove();
+        
+        // Add AI response
+        messagesDiv.innerHTML += `
+            <div class="message ai">
+                <div class="message-content">${data.text}</div>
+            </div>
+        `;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    } catch (error) {
+        console.error('Error:', error);
+        document.querySelector('.typing')?.remove();
+        messagesDiv.innerHTML += `
+            <div class="message ai error">
+                <div class="message-content">Erreur de connexion. Réessayez.</div>
+            </div>
+        `;
+    }
+}
+</script>
+{% endblock %}

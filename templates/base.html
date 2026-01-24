@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="{{ lang or 'fr' }}" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Permissions-Policy" content="camera=*, microphone=*, geolocation=*">
+    <title>{% block title %}Yann's NOTE - Hub de Clarté IA{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🦁</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="brand">
+                <a href="/" class="logo">
+                    <span class="lion-icon">🦁</span>
+                    Yann's <span class="highlight">NOTE</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <a href="/" class="{{ 'active' if current_page == 'home' else '' }}">Accueil</a>
+                <a href="/students" class="{{ 'active' if current_page == 'students' else '' }}">Étudiants</a>
+                <a href="/business" class="{{ 'active' if current_page == 'business' else '' }}">Entreprises</a>
+                <a href="/brain" class="{{ 'active' if current_page == 'brain' else '' }}">Cerveau IA</a>
+                <a href="/admin" class="{{ 'active' if current_page == 'admin' else '' }}">Admin</a>
+            </nav>
+            <div class="lang-toggle">
+                <button onclick="setLang('fr')" class="lang-btn {{ 'active' if lang == 'fr' else '' }}">FR</button>
+                <button onclick="setLang('en')" class="lang-btn {{ 'active' if lang == 'en' else '' }}">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Yann's NOTE - Transformez le chaos en clarté</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

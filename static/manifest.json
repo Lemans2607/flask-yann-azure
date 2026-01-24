@@ -1,0 +1,26 @@
+{
+  "name": "Yann's Note - Flask Demo",
+  "short_name": "YannsNote",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5a4",
+  "icons": [
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "permissions": [
+    "microphone",
+    "camera",
+    "geolocation"
+  ],
+  "description": "Le site python yann's note"
+}
